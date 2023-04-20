@@ -77,7 +77,7 @@ mysqli_close($conn);
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p >Are you sure you want to delete this item?</p>
+            <p >Are you sure you want to delete this person?</p>
             <form method="POST">
                 <button style=" font-size: 20px; " type="submit" name="confirm_delete">Yes</button>
                 <button style=" font-size: 20px; "type="submit" name="cancel_delete">No</button>

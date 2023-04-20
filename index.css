@@ -255,5 +255,39 @@ td a:hover {
     font-size: 20px;
   }
   
+  #selected-names {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 30px;
+  }
+  
+  .selected-name {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .selected-name span {
+    margin-right: 5px;
+  }
+  
+  .selected-name button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+  
+  }
   
   

@@ -206,24 +206,63 @@ considerationRadioButton.addEventListener('change', function() {
   <br>
   <br>
 
-
-  <label for="assigned-to">Assigned To:</label>
-  <select id="assigned-to" name="assigned-to[]" multiple>
-    <option value="" disabled selected>Select people</option>
-    <?php
-
-    $people_query = mysqli_query($conn, "SELECT * FROM people");
-    while ($row = mysqli_fetch_assoc($people_query)) {
-      $full_name = $row['first_name'] . ' ' . $row['last_name'];
-      echo '<option value="' . $row['id'] . '">' . $full_name . '</option>';
-    }
-    ?>
-  </select>
-  <br/> <br/> 
-
-
   <label for="end-date">End Date:</label>
   <input type="date" id="end-date" name="end-date" disabled>
+<br/><br/>
+  
+  <label for="assigned-to">Assigned To:</label>
+<div id="selected-names"></div>
+<div id="people-list">
+  <?php
+    $people_query = mysqli_query($conn, "SELECT * FROM people ORDER BY first_name ASC, last_name ASC");
+    while ($row = mysqli_fetch_assoc($people_query)) {
+      $full_name = $row['first_name'] . ' ' . $row['last_name'];
+      echo '<label><input type="checkbox" name="assigned-to[]" value="' . $row['id'] . '">' . $full_name . '</label>';
+    }
+  ?>
+</div>
+<script>
+  const peopleList = document.getElementById("people-list");
+  const selectedNamesDiv = document.getElementById("selected-names");
+
+  const updateSelectedNames = () => {
+    const selectedNames = Array.from(
+      peopleList.querySelectorAll("input:checked"),
+      (checkbox) => checkbox.parentNode.textContent.trim()
+    );
+
+    if (selectedNames.length === 0) {
+      selectedNamesDiv.innerHTML = "No one selected yet.";
+    } else {
+      selectedNamesDiv.innerHTML = "";
+      selectedNames.forEach((name) => {
+        const selectedName = document.createElement("div");
+        selectedName.classList.add("selected-name");
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = name;
+        const removeButton = document.createElement("button");
+        
+        removeButton.addEventListener("click", (event) => {
+          const checkbox = peopleList.querySelector(`input[value="${name}"]`);
+          checkbox.checked = false;
+          updateSelectedNames();
+        });
+        selectedName.appendChild(nameSpan);
+        selectedName.appendChild(removeButton);
+        selectedNamesDiv.appendChild(selectedName);
+      });
+    }
+  };
+
+  peopleList.addEventListener("change", (event) => {
+    updateSelectedNames();
+  });
+
+  updateSelectedNames();
+</script>
+
+
+  <br/> 
 
   <input type="submit" value="Add Project">
   <button id="close-button" class="close-button">×</button>
@@ -233,7 +272,6 @@ considerationRadioButton.addEventListener('change', function() {
   </div>
   <div id="project-list">
   <?php
-
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     
@@ -248,6 +286,25 @@ if ($result->num_rows > 0) {
     echo '<p><strong>Project Type: &nbsp; </strong> ' . htmlspecialchars($row['project_type']) . '</p>';
 
     
+    if ($row['assigned_to'] == "") {
+      echo '<p><strong>Assigned To: &nbsp; </strong> No people assigned yet</p>';
+    } else {
+      echo '<p><strong>Assigned To: &nbsp; </strong> ';
+
+      $assignedTo = json_decode($row['assigned_to']);
+
+      foreach ($assignedTo as $personId) {
+        $personQuery = "SELECT first_name, last_name FROM people WHERE id = $personId";
+        $personResult = $conn->query($personQuery);
+        if ($personResult->num_rows > 0) {
+          while ($personRow = $personResult->fetch_assoc()) {
+            echo htmlspecialchars($personRow['first_name'] . ' ' . $personRow['last_name']) . ', ';
+          }
+        }
+      }
+      echo '</p>';
+    }
+
     echo '<p><strong>Project Status: &nbsp; </strong> ' . htmlspecialchars($row['status']) . '</p>';
 
     if ($row['end_date']) {
@@ -272,6 +329,7 @@ if ($result->num_rows > 0) {
 } else {
   echo '<p>No projects found.</p>';
 }
+
 
   ?>
 </div>
