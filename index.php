@@ -166,54 +166,69 @@ considerationRadioButton.addEventListener('change', function() {
   <div id="modal-container" class="modal-container">
     <div id="modal-content" class="modal-content">
     <form id="add-project-form" class="add-project-form" action="process_form.php" method="post">
-<label for="project-title">Project Title:</label>
-<input type="text" id="project-title" name="project-title" required>
+  <label for="project-title">Project Title:</label>
+  <input type="text" id="project-title" name="project-title" required>
+  <br/>
+  <label for="project-description">Project Description:</label>
+  <textarea id="project-description" name="project-description" rows="4" cols="50" required></textarea>
+  <br/>
+  <label for="partner-company">Partner Company:</label>
+  <input type="text" id="partner-company" name="partner-company" required>
+  <br/>
+  <label for="start-date">Start Date:</label>
+  <input type="date" id="start-date" name="start-date" required>
+  <br/>
+  <label for="fund-type">Fund Type:</label>
+  <input type="text" id="fund-type" name="fund-type" required>
+  <br/>
+  <label for="project-type">Project Type:</label>
+  <input type="text" id="project-type" name="project-type" required>
+  <br/>
+  <label for="project-status">Project Status:</label>
+  <br>
+  <input type="radio" id="discovery" name="project-status" value="discovery" checked>
+  <label for="discovery">Discovery</label>
+  <br>
+  <input type="radio" id="pending" name="project-status" value="pending">
+  <label for="pending">Pending</label>
+  <br>
+  <input type="radio" id="scoping" name="project-status" value="scoping">
+  <label for="scoping">Scoping</label>
+  <br>
+  <input type="radio" id="in-progress" name="project-status" value="in-progress">
+  <label for="in-progress">In-progress</label>
+  <br>
+  <input type="radio" id="consideration" name="project-status" value="consideration">
+  <label for="consideration">Consideration</label>
+  <br>
+  <input type="radio" id="completed" name="project-status" value="completed">
+  <label for="completed">Completed</label>
+  <br>
+  <br>
 
-<label for="project-description">Project Description:</label>
-<textarea id="project-description" name="project-description" rows="4" cols="50" required></textarea>
+
+  <label for="assigned-to">Assigned To:</label>
+  <select id="assigned-to" name="assigned-to[]" multiple>
+    <option value="" disabled selected>Select people</option>
+    <?php
+
+    $people_query = mysqli_query($conn, "SELECT * FROM people");
+    while ($row = mysqli_fetch_assoc($people_query)) {
+      $full_name = $row['first_name'] . ' ' . $row['last_name'];
+      echo '<option value="' . $row['id'] . '">' . $full_name . '</option>';
+    }
+    ?>
+  </select>
+  <br/> <br/> 
 
 
-<label for="partner-company">Partner Company:</label>
-<input type="text" id="partner-company" name="partner-company" required>
-
-<label for="start-date">Start Date:</label>
-<input type="date" id="start-date" name="start-date" required>
-
-<label for="fund-type">Fund Type:</label>
-<input type="text" id="fund-type" name="fund-type" required>
-
-<label for="project-type">Project Type:</label>
-<input type="text" id="project-type" name="project-type" required>
-
-<label for="project-status">Project Status:</label>
-<br>
-<input type="radio" id="discovery" name="project-status" value="discovery" checked>
-<label for="discovery">Discovery</label>
-<br>
-<input type="radio" id="pending" name="project-status" value="pending">
-<label for="pending">Pending</label>
-<br>
-<input type="radio" id="scoping" name="project-status" value="scoping">
-<label for="scoping">Scoping</label>
-<br>
-<input type="radio" id="in-progress" name="project-status" value="in-progress">
-<label for="in-progress">In-progress</label>
-<br>
-<input type="radio" id="consideration" name="project-status" value="consideration">
-<label for="consideration">Consideration</label>
-<br>
-<input type="radio" id="completed" name="project-status" value="completed">
-<label for="completed">Completed</label>
-<br>
-<br>
-
-<label for="end-date">End Date:</label>
-<input type="date" id="end-date" name="end-date" disabled>
+  <label for="end-date">End Date:</label>
+  <input type="date" id="end-date" name="end-date" disabled>
 
   <input type="submit" value="Add Project">
-<button id="close-button" class="close-button">×</button>
-
+  <button id="close-button" class="close-button">×</button>
 </form>
+
     </div>
   </div>
   <div id="project-list">

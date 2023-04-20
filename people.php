@@ -65,6 +65,7 @@
 
         <button type="button" onclick="closeForm()">X</button>
 	</form>
+  
 
     <table>
   <thead>
