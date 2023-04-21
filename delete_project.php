@@ -1,3 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Person - MRC Team</title>
+    <link rel="stylesheet" href="index.css">
+	<link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_aEwjE_hEdGeBWihBJaTIRDG2XSiSNbAlwlPB-iRhxBJsqL7DEnbuGaQmbTBWHhLim-A&usqp=CAU" alt="MRC Studio Operations Logo">
+    </div>
+    <h1>MRC Team</h1>
+    
+    <nav>
+      
+      <ul>
+        <li><a href="people.php">MRC Team</a></li>
+        <li><a href="about.php">About Us</a></li>
+      </ul>
+    </nav>
+</header>
+
+
+
+
+
 <?php
 // Database connection
 $conn = new mysqli('localhost', 'root', 'elaine12', 'operations');
@@ -65,8 +93,8 @@ if (!empty($_POST['project_id'])) {
       <span class="close">&times;</span>
       <p>Are you sure you want to delete this project?</p>
       <form method="POST">
-        <button style="font-size: 20px;" type="submit" name="confirm_delete">Yes</button>
-        <button style="font-size: 20px;" type="submit" name="cancel_delete">No</button>
+        <button style="font-size: 15px;" type="submit" name="confirm_delete">Yes</button>
+        <button style="font-size: 15px;" type="submit" name="cancel_delete">No</button>
         <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
       </form>
     </div>

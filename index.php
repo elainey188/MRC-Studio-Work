@@ -170,7 +170,10 @@ considerationRadioButton.addEventListener('change', function() {
   <input type="text" id="project-title" name="project-title" required>
   <br/>
   <label for="project-description">Project Description:</label>
-  <textarea id="project-description" name="project-description" rows="4" cols="50" required></textarea>
+<textarea id="project-description" name="project-description" rows="4" cols="50" maxlength="200" required></textarea>
+<span id="description-message" style="color: gray; font-size: 12px;">Max length allowed: 200 characters</span>
+
+
   <br/>
   <label for="partner-company">Partner Company:</label>
   <input type="text" id="partner-company" name="partner-company" required>
@@ -285,26 +288,34 @@ if ($result->num_rows > 0) {
     echo '<p><strong>Fund Type: &nbsp; </strong> ' . htmlspecialchars($row['fund_type']) . '</p>';
     echo '<p><strong>Project Type: &nbsp; </strong> ' . htmlspecialchars($row['project_type']) . '</p>';
 
-    
     if ($row['assigned_to'] == "") {
       echo '<p><strong>Assigned To: &nbsp; </strong> No people assigned yet</p>';
     } else {
       echo '<p><strong>Assigned To: &nbsp; </strong> ';
-
+    
       $assignedTo = json_decode($row['assigned_to']);
-
+    
+      $totalPeople = count($assignedTo);
+      $counter = 0;
+    
       foreach ($assignedTo as $personId) {
         $personQuery = "SELECT first_name, last_name FROM people WHERE id = $personId";
         $personResult = $conn->query($personQuery);
         if ($personResult->num_rows > 0) {
           while ($personRow = $personResult->fetch_assoc()) {
-            echo htmlspecialchars($personRow['first_name'] . ' ' . $personRow['last_name']) . ', ';
+            echo htmlspecialchars($personRow['first_name'] . ' ' . $personRow['last_name']);
+    
+            $counter++;
+            if ($counter != $totalPeople) {
+              echo ', ';
+            }
           }
         }
       }
+    
       echo '</p>';
     }
-
+    
     echo '<p><strong>Project Status: &nbsp; </strong> ' . htmlspecialchars($row['status']) . '</p>';
 
     if ($row['end_date']) {
