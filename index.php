@@ -53,58 +53,6 @@ $result = $conn->query($sql);
 const completedRadioButton = document.getElementById('completed');
 const endDateInput = document.getElementById('end-date');
 
-
-completedRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = false;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-const pendingRadioButton = document.getElementById('pending');
-pendingRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = true;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-const discoveryRadioButton = document.getElementById('discovery');
-discoveryRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = true;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-const inProgressRadioButton = document.getElementById('in-progress');
-inProgressRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = true;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-const scopingRadioButton = document.getElementById('scoping');
-scopingRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = true;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-const considerationRadioButton = document.getElementById('consideration');
-considerationRadioButton.addEventListener('change', function() {
-  if (this.checked) {
-    endDateInput.disabled = true;
-  } else {
-    endDateInput.disabled = true;
-  }
-});
-
-   
-
-
     });
   
 
@@ -166,13 +114,20 @@ considerationRadioButton.addEventListener('change', function() {
 
   <div id="modal-container" class="modal-container">
     <div id="modal-content" class="modal-content">
+    <div class="modal-header">
+      <h3>Add Project</h3>
+      <div class="close-button-container">
+  <button id="close-button" class="close-button">×</button>
+</div>
+
+    </div>
     <form id="add-project-form" class="add-project-form" action="process_form.php" method="post">
   <label for="project-title">Project Title:</label>
   <input type="text" id="project-title" name="project-title" required>
   <br/>
   <label for="project-description">Project Description:</label>
-<textarea id="project-description" name="project-description" rows="4" cols="50" maxlength="200" required></textarea>
-<span id="description-message" style="color: gray; font-size: 12px;">Max length allowed: 200 characters</span>
+<textarea id="project-description" name="project-description" rows="4" cols="50"required></textarea>
+
 
 
   <br/>
@@ -211,7 +166,7 @@ considerationRadioButton.addEventListener('change', function() {
   <br>
 
   <label for="end-date">End Date:</label>
-  <input type="date" id="end-date" name="end-date" disabled>
+  <input type="date" id="end-date" name="end-date" value="end-date">
 <br/><br/>
   
   <label for="assigned-to">Assigned To:</label>
@@ -269,7 +224,7 @@ considerationRadioButton.addEventListener('change', function() {
   <br/> 
 
   <input type="submit" value="Add Project">
-  <button id="close-button" class="close-button">×</button>
+  
 </form>
 
     </div>
