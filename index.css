@@ -349,3 +349,6 @@ td a:hover {
     color: #999;
   }
   
+    .gantt-chart {
+  background-color: black;
+}

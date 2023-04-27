@@ -125,6 +125,7 @@ considerationRadioButton.addEventListener('change', function() {
     
     <nav>
       <ul>
+      <li><a href="gantt_view.php">Projects Gantt View</a></li>
         <li><a href="people.php">MRC Team</a></li>
         <li><a href="about.php">About Us</a></li>
       </ul>
