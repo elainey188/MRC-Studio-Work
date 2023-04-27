@@ -30,7 +30,7 @@ CREATE TABLE `people` (
   `last_name` varchar(255) NOT NULL,
   `employee_type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `people` (
 
 LOCK TABLES `people` WRITE;
 /*!40000 ALTER TABLE `people` DISABLE KEYS */;
-INSERT INTO `people` VALUES (10,'Ryan','Miller','PI'),(11,'Mackenzie','Eaton','Assistant'),(12,'Gavin','McCarthy','PAS'),(19,'Calvin','Kusiima','WorkStudy'),(20,'Elaine','Nankanja','Associate'),(22,'Godwin','David','PI'),(23,'Godfrey','Ssemugooma','PAS'),(25,'Sanyu','Tracy','WorkStudy'),(26,'Sheila','Ssemugooma','Assistant');
+INSERT INTO `people` VALUES (11,'Mackenzie','Eaton','Associate'),(12,'Gavin','McCarthy','PAS'),(27,'Ryan','Miller','PI'),(29,'Graham','Grant','WorkStudy');
 /*!40000 ALTER TABLE `people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,9 +59,11 @@ CREATE TABLE `project_people` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   KEY `people_id` (`people_id`),
+  CONSTRAINT `fk_project_people_people_id` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_project_people_project_id` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
   CONSTRAINT `project_people_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
   CONSTRAINT `project_people_ibfk_2` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +72,7 @@ CREATE TABLE `project_people` (
 
 LOCK TABLES `project_people` WRITE;
 /*!40000 ALTER TABLE `project_people` DISABLE KEYS */;
+INSERT INTO `project_people` VALUES (6,67,12,'2023-04-03','2023-05-05'),(7,67,29,'2023-04-03','2023-05-05'),(8,67,11,'2023-04-03','2023-05-05'),(9,67,27,'2023-04-03','2023-05-05'),(10,68,11,'2023-04-03','2023-04-29'),(11,69,11,'2022-12-05','2023-04-28'),(12,69,27,'2022-12-05','2023-04-28');
 /*!40000 ALTER TABLE `project_people` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +95,7 @@ CREATE TABLE `projects` (
   `project_description` text,
   `assigned_to` json DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +104,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (48,'Embreate','Acme Inc','2023-01-04','CTO','Game Design','completed','2023-04-21','We will be testing game code to ensure it works just fine with the previous version of the game.','[\"20\", \"12\", \"11\", \"10\"]'),(49,'D&D Skunkworks','MRC Studio','2023-02-02','ARD','Cartoon','scoping',NULL,'We are creating this cool new cartoon for the kids.','[\"19\", \"23\", \"25\"]'),(50,'Unity Tracker','MRC Studio','2023-03-10','CTO','Tracking Software','consideration',NULL,'We love a good unity tracker like even literally everytime we use it things just seem to work out. we will always be using it because we just love it.','[\"20\", \"22\"]');
+INSERT INTO `projects` VALUES (67,'Immersive Dining Experience','MRC Studio','2023-04-03','ARD','Experience','completed','2023-05-05','We love to dine in a galaxy full of stars.','[\"12\", \"29\", \"11\", \"27\"]'),(68,'Unity Tracker','Acme Inc','2023-04-03','ARD','Cartoon','consideration','2023-04-29','We wanna track all our operatons and stuff using this.','[\"11\"]'),(69,'Embreate','Unity','2022-12-05','CTO','Game Design','completed','2023-04-28','We will be testing some new code in accordance with the previous version of the game.','[\"11\", \"27\"]');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,4 +125,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-24  9:44:57
+-- Dump completed on 2023-04-27 15:19:01
