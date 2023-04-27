@@ -65,9 +65,7 @@
 
         <button type="button" onclick="closeForm()">X</button>
 	</form>
-  
-
-    <table>
+  <table>
   <thead>
     <tr>
       <th>Name</th>
@@ -76,45 +74,53 @@
     </tr>
   </thead>
   <tbody>
-    <?php
-    // Database connection code
-    $host = 'localhost'; 
-    $user = 'root';
-    $password = 'elaine12';
-    $database = 'operations';
 
-    $conn = mysqli_connect($host, $user, $password, $database);
+  
+  <?php
+// Database connection code
+$host = 'localhost'; 
+$user = 'root';
+$password = 'elaine12';
+$database = 'operations';
 
-    if (!$conn) {
-      die("Connection failed: " . mysqli_connect_error());
-    }
+$conn = mysqli_connect($host, $user, $password, $database);
 
-    $sql = "SELECT * FROM people ORDER BY id ASC";
-    $result = mysqli_query($conn, $sql);
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
 
-    $search_query = isset($_GET['query']) ? $_GET['query'] : '';
-    $sql = "SELECT * FROM people";
-    if ($search_query) {
-      $sql .= " WHERE first_name LIKE '%" . $search_query . "%' OR last_name LIKE '%" . $search_query . "%'";
-    }
-   
-    $sql .= " ORDER BY id ASC";
-    $result = mysqli_query($conn, $sql);
+$search_query = isset($_GET['query']) ? $_GET['query'] : '';
+$sql = "SELECT * FROM people";
+if ($search_query) {
+  $sql .= " WHERE first_name LIKE '%" . $search_query . "%' OR last_name LIKE '%" . $search_query . "%'";
+}
 
-    while ($row = mysqli_fetch_assoc($result)) {
-      if (!$search_query || stripos($row['first_name'], $search_query) !== false || stripos($row['last_name'], $search_query) !== false) {
+$sql .= " ORDER BY id ASC";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 0) {
+  echo "No search results found.";
+} else {
+
+  
+  while ($row = mysqli_fetch_assoc($result)) {
+    if (!$search_query || stripos($row['first_name'], $search_query) !== false || stripos($row['last_name'], $search_query) !== false) {
       echo "<tr>";
       echo "<td>" . $row['first_name'] . " " . $row['last_name'] . "</td>";
       echo "<td>" . $row['employee_type'] . "</td>";
-      echo "<td><a href=\"delete_person.php?id=" . $row['id'] . "\"><i class=\"fa fa-trash\"></i></a> <a href=\"edit_person.php?id=" . $row['id'] . "\"><i class=\"fa fa-edit\"></i></a></td>";
+      echo "<td>
+        <a href=\"view_person.php?id=" . $row['id'] . "\"><i class=\"fa fa-eye\"></i></a> &nbsp;
+        <a href=\"delete_person.php?id=" . $row['id'] . "\"><i class=\"fa fa-trash\"></i></a> &nbsp;
+        <a href=\"edit_person.php?id=" . $row['id'] . "\"><i class=\"fa fa-edit\"></i></a>
+      </td>";
       echo "</tr>";
     }
   }
+}
 
+mysqli_close($conn);
+?>
 
-
-    mysqli_close($conn);
-    ?>
   </tbody>
 </table>
 
