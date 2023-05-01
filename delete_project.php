@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Delete Project</title>
-    <link rel="stylesheet" href="index.css">
-	<link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-<header>
-    <div class="logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_aEwjE_hEdGeBWihBJaTIRDG2XSiSNbAlwlPB-iRhxBJsqL7DEnbuGaQmbTBWHhLim-A&usqp=CAU" alt="MRC Studio Operations Logo">
-    </div>
-    <h1>MRC Studio Operations</h1>
-    
-    <nav>
-      
-      <ul>
-        <li><a href="people.php">MRC Team</a></li>
-        <li><a href="about.php">About Us</a></li>
-      </ul>
-    </nav>
-</header>
-
-
-
-
-
 <?php
 // Database connection
 $conn = new mysqli('localhost', 'root', 'elaine12', 'operations');
@@ -35,7 +7,13 @@ if ($conn->connect_error) {
 
 if (!empty($_POST['project_id'])) {
   $project_id = mysqli_real_escape_string($conn, $_POST['project_id']);
-  
+
+  // Get project title
+  $sql = "SELECT project_title FROM projects WHERE id='$project_id'";
+  $result = $conn->query($sql);
+  $row = $result->fetch_assoc();
+  $project_title = $row['project_title'];
+
   if (isset($_POST['confirm_delete'])) {
     $sql = "DELETE FROM projects WHERE id='$project_id'";
     if ($conn->query($sql) === TRUE) {
@@ -52,7 +30,6 @@ if (!empty($_POST['project_id'])) {
   echo "Project ID not provided";
 }
 ?>
-
 <?php if (!empty($_POST['project_id'])): ?>
   <style>
     .modal {
@@ -87,11 +64,10 @@ if (!empty($_POST['project_id'])) {
       cursor: pointer;
     }
   </style>
-
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <p>Are you sure you want to delete this project?</p>
+      <p>Are you sure you want to delete the project "<?php echo $project_title; ?>"?</p>
       <form method="POST">
         <button style="font-size: 15px;" type="submit" name="confirm_delete">Yes</button>
         <button style="font-size: 15px;" type="submit" name="cancel_delete">No</button>
@@ -99,7 +75,6 @@ if (!empty($_POST['project_id'])) {
       </form>
     </div>
   </div>
-
   <script>
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];

@@ -99,7 +99,7 @@ $sql .= " ORDER BY id ASC";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) == 0) {
-  echo "No search results found.";
+  echo "";
 } else {
 
   

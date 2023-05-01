@@ -33,12 +33,44 @@ if ($assignedTo && $projectId && $startDate && $endDate) {
   }
 }
 
+$peopleIds = array(); 
+$result = $conn->query("SELECT people_id FROM project_people WHERE project_id = $projectId");
+while ($row = $result->fetch_assoc()) {
+  $peopleIds[] = $row['people_id'];
+}
 
-    echo "Project added successfully...";
-    $conn->close();
+foreach ($peopleIds as $peopleId) {
+  $query = "SELECT Work_Terms FROM people WHERE id = $peopleId";
+  $result = $conn->query($query);
+  if (!$result) {
+    die("Error executing query '$query': " . $conn->error);
+  }
+  $row = $result->fetch_assoc();
+  $workTerms = json_decode($row['Work_Terms'], true);
+  
+  $formattedStartDate = date('F jS Y', strtotime($startDate));
+  $formattedEndDate = date('F jS Y', strtotime($endDate));
+  
+  $workTerms[] = array(
+    'start_date' => $formattedStartDate,
+    'end_date' => $formattedEndDate
+  );
+  
+  $workTermsJson = json_encode($workTerms);
+  
+  $stmt = $conn->prepare("UPDATE people SET Work_Terms = ? WHERE id = ?");
+  $stmt->bind_param("si", $workTermsJson, $peopleId);
+  $stmt->execute();
+  $stmt->close();
+}
 
-    header("Location: index.php");
-    exit();
+
+echo "Project added successfully...";
+$conn->close();
+header("Location: index.php");
+exit();
+
+
   }
 }
 
