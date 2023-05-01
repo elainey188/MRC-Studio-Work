@@ -135,7 +135,7 @@ const endDateInput = document.getElementById('end-date');
   <input type="text" id="partner-company" name="partner-company" required>
   <br/>
   <label for="start-date">Start Date:</label>
-  <input type="date" id="start-date" name="start-date" required>
+<input type="date" id="start-date" name="start-date" value="start-date" required>
   <br/>
   <label for="fund-type">Fund Type:</label>
   <input type="text" id="fund-type" name="fund-type" required>
@@ -166,7 +166,21 @@ const endDateInput = document.getElementById('end-date');
   <br>
 
   <label for="end-date">End Date:</label>
-  <input type="date" id="end-date" name="end-date" value="end-date">
+<input type="date" id="end-date" name="end-date" min="" value="end-date">
+
+<script>
+const startDateInput = document.getElementById("start-date");
+const endDateInput = document.getElementById("end-date");
+
+startDateInput.addEventListener("input", () => {
+  const selectedDate = new Date(startDateInput.value);
+  endDateInput.min = startDateInput.value;
+
+  if (new Date(endDateInput.value) < selectedDate) {
+    endDateInput.value = startDateInput.value;
+  }
+});
+</script>
 <br/><br/>
   
   <label for="assigned-to">Assigned To:</label>
