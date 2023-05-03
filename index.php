@@ -126,7 +126,7 @@ const endDateInput = document.getElementById('end-date');
   <input type="text" id="project-title" name="project-title" required>
   <br/>
   <label for="project-description">Project Description:</label>
-<textarea id="project-description" name="project-description" rows="4" cols="50"required></textarea>
+<textarea id="project-description" name="project-description" rows="4" cols="50" ></textarea>
 
 
 
@@ -251,7 +251,7 @@ if ($result->num_rows > 0) {
     echo '<div class="project">';
     echo '<p style=" font-size: 33px;">' . htmlspecialchars($row['project_title']) . '</p>';
 
-    echo '<p style="font-size: 23px;">' . htmlspecialchars($row['project_description']) . '</p><br/>';
+    echo '<p style="font-size: 20px;">' . htmlspecialchars($row['project_description']) . '</p><br/>';
 
     echo '<p><strong>Partner Company: &nbsp; </strong> ' . htmlspecialchars($row['partner_company']) . '</p>';
     echo '<p><strong>Start Date: &nbsp; </strong> ' . htmlspecialchars($row['start_date']) . '</p>';

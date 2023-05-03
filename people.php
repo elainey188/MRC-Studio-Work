@@ -51,7 +51,7 @@
 		<input type="text" name="last_name" required>
 
 	  <label for="employee_type">Employee Type:</label>
-    <select name="employee_type" required>
+    <select name="employee_type" >
     <option value="" disabled selected class="faded">Select...</option>
         <option value="PI">PI</option>
         <option value="Associate">Associate</option>
