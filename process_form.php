@@ -38,7 +38,6 @@ $result = $conn->query("SELECT people_id FROM project_people WHERE project_id = 
 while ($row = $result->fetch_assoc()) {
   $peopleIds[] = $row['people_id'];
 }
-
 foreach ($peopleIds as $peopleId) {
   $query = "SELECT Work_Terms FROM people WHERE id = $peopleId";
   $result = $conn->query($query);
@@ -48,12 +47,10 @@ foreach ($peopleIds as $peopleId) {
   $row = $result->fetch_assoc();
   $workTerms = json_decode($row['Work_Terms'], true);
   
-  $formattedStartDate = date('F jS Y', strtotime($startDate));
-  $formattedEndDate = date('F jS Y', strtotime($endDate));
-  
   $workTerms[] = array(
-    'start_date' => $formattedStartDate,
-    'end_date' => $formattedEndDate
+    'project_id' => $projectId,
+    'start_date' => $startDate,
+    'end_date' => $endDate
   );
   
   $workTermsJson = json_encode($workTerms);
@@ -63,6 +60,7 @@ foreach ($peopleIds as $peopleId) {
   $stmt->execute();
   $stmt->close();
 }
+
 
 
 echo "Project added successfully...";

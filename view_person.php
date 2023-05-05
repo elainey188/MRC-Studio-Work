@@ -50,15 +50,15 @@ if (isset($_GET['id'])) {
       echo "<br/><br/><h3>{$person['first_name']} {$person['last_name']}'s projects</h3>";
       echo "<table>";
       echo "<thead>";
-      echo "<tr><th>Project Title</th><th>Start Date</th><th>End Date</th><th>Hours per Week</th></tr>";
+      echo "<tr><th>Project ID</th><th>Project Title</th><th>Start Date</th><th>End Date</th>";
       echo "</thead>";
       echo "<tbody>";
       while ($row = mysqli_fetch_assoc($project_result)) {
         echo "<tr>";
+        echo "<td>{$row['id']}</td>";
         echo "<td>{$row['project_title']}</td>";
         echo "<td>{$row['start_date']}</td>";
         echo "<td>{$row['end_date']}</td>";
-        echo "<td></td>";
         echo "</tr>";
       }
       echo "</tbody>";
@@ -71,4 +71,5 @@ if (isset($_GET['id'])) {
   }
   
 ?>
-
+</body>
+</html>

@@ -53,7 +53,7 @@ if ($conn->connect_error) {
   $stmt->execute();
   $stmt->close();
 
- 
+
   exit();
 }
 
@@ -69,7 +69,8 @@ $stmt->close();
 
 <div class="form-container">
 <h2>Edit Project</h2>
-<form method="post">
+<form method="post" action="update_project.php?id=<?php echo $row['id']; ?>">
+
   <label for="project-title">Project Title:</label>
   <input type="text" name="project-title" value="<?php echo $row['project_title']; ?>">
 
@@ -90,13 +91,14 @@ $stmt->close();
 
   <label for="assigned-to">Assigned To:</label>
 <select name="assigned-to[]" multiple>
-    <?php
-        $assignedToArr = json_decode($row['assigned_to'], true);
-        foreach ($teamMembers as $member) {
-            $selected = in_array($member, $assignedToArr) ? 'selected' : '';
-            echo "<option value=\"$member\" $selected>$member</option>";
-        }
-    ?>
+<?php
+    $assignedToArr = json_decode($row['assigned_to'], true);
+    foreach ($teamMembers as $member) {
+        $selected = in_array($member, $assignedToArr) ? 'selected' : '';
+        echo "<option value=\"$member\" $selected>$member</option>";
+    }
+?>
+
 </select><br>
 
 
